@@ -1,4 +1,4 @@
-package com.tj.exercise.flash.netty.learn.chapter2;
+package com.tj.exercise.flash.netty.learn.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;
@@ -26,7 +26,7 @@ public class NettyServer {
                        .channel(NioServerSocketChannel.class)
                        .childHandler(new ChannelInitializer<NioSocketChannel>() {
                            protected  void initChannel(NioSocketChannel ch){
-
+                              ch.pipeline().addLast(new FirstServerHandler());
                            }
                        });
        bind(serverBootstrap,1000);
