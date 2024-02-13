@@ -29,15 +29,23 @@ public class NettyServer {
 
                            }
                        });
-        serverBootstrap.bind(8000).addListener(new GenericFutureListener<Future<? super Void>>() {
+       bind(serverBootstrap,1000);
+    }
+
+    private static void bind(final ServerBootstrap serverBootstrap, final int port){
+        serverBootstrap.bind(port).addListener(new GenericFutureListener<Future<? super Void>>() {
             @Override
             public void operationComplete(Future<? super Void> future) throws Exception {
                 if(future.isSuccess()){
-                    System.out.println("端口绑定成功!");
+                    System.out.println("端口 [" +port +"]"+"绑定成功!");
                 } else{
-                    System.out.println("端口绑定失败!");
+                    System.out.println("端口 [" +port +"]"+"绑定失败!");
+                    bind(serverBootstrap, port+1);
                 }
+
             }
         });
     }
 }
+
+
