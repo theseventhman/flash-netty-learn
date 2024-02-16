@@ -1,4 +1,4 @@
-package com.tj.exercise.flash.netty.learn.protocol.command;
+package com.tj.exercise.flash.netty.learn.protocol;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;

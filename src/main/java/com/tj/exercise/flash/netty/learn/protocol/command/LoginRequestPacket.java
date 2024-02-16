@@ -1,5 +1,6 @@
 package com.tj.exercise.flash.netty.learn.protocol.command;
 
+import com.tj.exercise.flash.netty.learn.protocol.Packet;
 import lombok.Data;
 
 import static com.tj.exercise.flash.netty.learn.protocol.command.Command.LOGIN_REQUEST;
@@ -11,7 +12,7 @@ import static com.tj.exercise.flash.netty.learn.protocol.command.Command.LOGIN_R
 @Data
 public class LoginRequestPacket extends Packet {
 
-    private Integer userId;
+    private String userId;
 
     private String username;
 
