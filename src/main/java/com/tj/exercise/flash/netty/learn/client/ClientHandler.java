@@ -4,6 +4,8 @@ import com.tj.exercise.flash.netty.learn.protocol.Packet;
 import com.tj.exercise.flash.netty.learn.protocol.PacketCodeC;
 import com.tj.exercise.flash.netty.learn.protocol.command.LoginRequestPacket;
 import com.tj.exercise.flash.netty.learn.protocol.response.LoginResponsePacket;
+import com.tj.exercise.flash.netty.learn.protocol.response.MessageResponsePacket;
+import com.tj.exercise.flash.netty.learn.util.LoginUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -41,9 +43,13 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
             if (loginResponsePacket.isSuccess()) {
                 System.out.println(new Date() + ": 客户端登录成功");
+                LoginUtil.markAsLogin(ctx.channel());
             } else {
                 System.out.println(new Date() + ": 客户端登录失败，原因：" + loginResponsePacket.getReason());
             }
+        } else if (packet instanceof MessageResponsePacket) {
+            MessageResponsePacket messageResponsePacket = (MessageResponsePacket) packet;
+            System.out.println(new Date() + ": 收到服务端的消息: " + messageResponsePacket.getMessage());
         }
     }
 }

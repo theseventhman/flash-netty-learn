@@ -1,7 +1,9 @@
 package com.tj.exercise.flash.netty.learn.protocol;
 
 import com.tj.exercise.flash.netty.learn.protocol.command.LoginRequestPacket;
+import com.tj.exercise.flash.netty.learn.protocol.request.MessageRequestPacket;
 import com.tj.exercise.flash.netty.learn.protocol.response.LoginResponsePacket;
+import com.tj.exercise.flash.netty.learn.protocol.response.MessageResponsePacket;
 import com.tj.exercise.flash.netty.learn.serialize.Serializer;
 import com.tj.exercise.flash.netty.learn.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -10,8 +12,7 @@ import io.netty.buffer.ByteBufAllocator;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.tj.exercise.flash.netty.learn.protocol.command.Command.LOGIN_REQUEST;
-import static com.tj.exercise.flash.netty.learn.protocol.command.Command.LOGIN_RESPONSE;
+import static com.tj.exercise.flash.netty.learn.protocol.command.Command.*;
 
 /**
  * @Author: tj
@@ -29,6 +30,8 @@ public class PacketCodeC {
         packetTypeMap = new HashMap<>();
         packetTypeMap.put(LOGIN_REQUEST, LoginRequestPacket.class);
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
+        packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
+        packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();

@@ -30,7 +30,7 @@ public class NettyServer {
                               ch.pipeline().addLast(new ServerHandler());
                            }
                        });
-       bind(serverBootstrap,1000);
+       bind(serverBootstrap,8000);
     }
 
     private static void bind(final ServerBootstrap serverBootstrap, final int port){
