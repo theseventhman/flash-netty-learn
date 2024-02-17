@@ -1,7 +1,14 @@
 package com.tj.exercise.flash.netty.learn.server;
 
+import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerA;
+import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerB;
+import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerC;
+import com.tj.exercise.flash.netty.learn.handler.outbound.OutBoundHandlerA;
+import com.tj.exercise.flash.netty.learn.handler.outbound.OutBoundHandlerB;
+import com.tj.exercise.flash.netty.learn.handler.outbound.OutBoundHandlerC;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -27,7 +34,15 @@ public class NettyServer {
                        .childHandler(new ChannelInitializer<NioSocketChannel>() {
                            @Override
                            protected  void initChannel(NioSocketChannel ch){
-                              ch.pipeline().addLast(new ServerHandler());
+                              // inBound,处理数据的逻辑链
+                              ch.pipeline().addLast(new InBoundHandlerA());
+                               ch.pipeline().addLast(new InBoundHandlerB());
+                               ch.pipeline().addLast(new InBoundHandlerC());
+
+                               // outBound，处理写数据的逻辑链
+                               ch.pipeline().addLast(new OutBoundHandlerA());
+                               ch.pipeline().addLast(new OutBoundHandlerB());
+                               ch.pipeline().addLast(new OutBoundHandlerC());
                            }
                        });
        bind(serverBootstrap,8000);
