@@ -1,6 +1,7 @@
 package com.tj.exercise.flash.netty.learn.util;
 
 import com.tj.exercise.flash.netty.learn.attribute.Attributes;
+import com.tj.exercise.flash.netty.learn.protocol.response.LoginResponsePacket;
 import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 
@@ -18,4 +19,6 @@ public class LoginUtil {
         Attribute<Boolean> loginAttr = channel.attr(Attributes.LOGIN);
         return ((io.netty.util.Attribute) loginAttr).get() != null;
     }
+
+
 }
