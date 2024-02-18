@@ -19,7 +19,7 @@ import static com.tj.exercise.flash.netty.learn.protocol.command.Command.*;
  * @Date: 2024/2/14 22:21
  */
 public class PacketCodeC {
-    private static final int MAGIC_NUMBER = 0x12345678;
+    public static final int MAGIC_NUMBER = 0x12345678;
     public static final PacketCodeC INSTANCE = new PacketCodeC();
 
     private final Map<Byte, Class<? extends Packet>> packetTypeMap;

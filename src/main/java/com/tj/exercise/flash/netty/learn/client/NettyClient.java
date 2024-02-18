@@ -4,6 +4,7 @@ import com.tj.exercise.flash.netty.learn.client.handler.LoginResponseHandler;
 import com.tj.exercise.flash.netty.learn.client.handler.MessageResponseHandler;
 import com.tj.exercise.flash.netty.learn.codec.PacketDecoder;
 import com.tj.exercise.flash.netty.learn.codec.PacketEncoder;
+import com.tj.exercise.flash.netty.learn.codec.Spliter;
 import com.tj.exercise.flash.netty.learn.protocol.PacketCodeC;
 import com.tj.exercise.flash.netty.learn.protocol.request.MessageRequestPacket;
 import com.tj.exercise.flash.netty.learn.util.LoginUtil;
@@ -53,10 +54,12 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch){
-                      ch.pipeline().addLast(new PacketDecoder());
-                      ch.pipeline().addLast(new LoginResponseHandler());
-                      ch.pipeline().addLast(new MessageResponseHandler());
-                      ch.pipeline().addLast(new PacketEncoder());
+                        ch.pipeline().addLast(new FirstClientHandler());
+                        ch.pipeline().addLast(new Spliter());
+                        ch.pipeline().addLast(new PacketDecoder());
+                        ch.pipeline().addLast(new LoginResponseHandler());
+                        ch.pipeline().addLast(new MessageResponseHandler());
+                        ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
 

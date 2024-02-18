@@ -2,6 +2,7 @@ package com.tj.exercise.flash.netty.learn.server;
 
 import com.tj.exercise.flash.netty.learn.codec.PacketDecoder;
 import com.tj.exercise.flash.netty.learn.codec.PacketEncoder;
+import com.tj.exercise.flash.netty.learn.codec.Spliter;
 import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerA;
 import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerB;
 import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerC;
@@ -38,6 +39,7 @@ public class NettyServer {
                        .childHandler(new ChannelInitializer<NioSocketChannel>() {
                            @Override
                            protected  void initChannel(NioSocketChannel ch){
+                               ch.pipeline().addLast(new Spliter());
                                ch.pipeline().addLast(new PacketDecoder());
                                ch.pipeline().addLast(new LoginRequestHandler());
                                ch.pipeline().addLast(new MessageRequestHandler());
