@@ -5,7 +5,6 @@ import com.tj.exercise.flash.netty.learn.protocol.response.LoginResponsePacket;
 import com.tj.exercise.flash.netty.learn.util.LoginUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import org.omg.CORBA.CTX_RESTRICT_SCOPE;
 
 import java.util.Date;
 import java.util.UUID;
@@ -20,7 +19,7 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
        // 创建登录对象
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
         loginRequestPacket.setUserId(UUID.randomUUID().toString());
-        loginRequestPacket.setUsername("flash");
+        loginRequestPacket.setUserName("flash");
         loginRequestPacket.setPassword("pwd");
 
         // 写数据

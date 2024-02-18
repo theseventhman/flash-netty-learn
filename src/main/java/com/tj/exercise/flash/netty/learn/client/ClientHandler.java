@@ -12,7 +12,6 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.util.Date;
 import java.util.UUID;
-import java.util.spi.CalendarDataProvider;
 
 /**
  * @Author: tj
@@ -26,7 +25,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         // 创建登录对象
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
         loginRequestPacket.setUserId(UUID.randomUUID().toString());
-        loginRequestPacket.setUsername("flash");
+        loginRequestPacket.setUserName("flash");
         loginRequestPacket.setPassword("pwd");
         ByteBuf buffer = PacketCodeC.INSTANCE.encode(ctx.alloc(),loginRequestPacket);
         ctx.channel().writeAndFlush(buffer);
