@@ -2,6 +2,10 @@ package com.tj.exercise.flash.netty.learn.server.handler;
 
 import com.tj.exercise.flash.netty.learn.protocol.command.LoginRequestPacket;
 import com.tj.exercise.flash.netty.learn.protocol.response.LoginResponsePacket;
+import com.tj.exercise.flash.netty.learn.session.Session;
+import com.tj.exercise.flash.netty.learn.util.IDUtil;
+import com.tj.exercise.flash.netty.learn.util.LoginUtil;
+import com.tj.exercise.flash.netty.learn.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -21,6 +25,11 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         if (valid(loginRequestPacket)) {
             loginResponsePacket.setSuccess(true);
             System.out.println(new Date() + ": 登录成功!");
+            LoginUtil.markAsLogin(ctx.channel());
+//           String userId = IDUtil.randomId();
+//            loginResponsePacket.setUserId(userId);
+//            System.out.println("[" + loginRequestPacket.getUserName() + "]登录成功");
+//            SessionUtil.bindSession(new Session(userId, loginRequestPacket.getUserName()), ctx.channel());
         } else {
             loginResponsePacket.setReason("账号密码校验失败");
             loginResponsePacket.setSuccess(false);

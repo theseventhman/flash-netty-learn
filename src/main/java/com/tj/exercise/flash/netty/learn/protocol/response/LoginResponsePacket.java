@@ -11,6 +11,10 @@ import static com.tj.exercise.flash.netty.learn.protocol.command.Command.LOGIN_R
  */
 @Data
 public class LoginResponsePacket extends Packet {
+    private String userId;
+
+    private String userName;
+
     private boolean success;
 
     private String reason;

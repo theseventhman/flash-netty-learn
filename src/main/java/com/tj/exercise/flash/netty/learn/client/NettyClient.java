@@ -54,7 +54,6 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch){
-                        ch.pipeline().addLast(new FirstClientHandler());
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
@@ -97,7 +96,7 @@ public class NettyClient {
     private static void startConsoleThread(Channel channel) {
         new Thread(() ->{
             while(!Thread.interrupted()){
-               if(LoginUtil.hasLogin(channel)){
+           //    if(LoginUtil.hasLogin(channel)){
                    System.out.println("输入消息发送至服务端: ");
                    Scanner sc = new Scanner(System.in);
                    String line = sc.nextLine();
@@ -107,7 +106,7 @@ public class NettyClient {
                    ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(channel.alloc(),packet);
                    channel.writeAndFlush(byteBuf);
                }
-            }
+           // }
         }).start();
     }
 }
