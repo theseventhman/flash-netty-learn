@@ -20,6 +20,7 @@ public class ConsoleCommandManager implements  ConsoleCommand{
         consoleCommandMap.put("sendToUser", new SendToUserConsoleCommand());
         consoleCommandMap.put("logout", new LogoutConsoleCommand());
         consoleCommandMap.put("createGroup", new CreateGroupConsoleCommand());
+        consoleCommandMap.put("joinGroup", new JoinGroupConsoleCommand());
     }
     @Override
     public void exec(Scanner scanner, Channel channel) {
