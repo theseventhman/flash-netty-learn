@@ -1,8 +1,12 @@
 package com.tj.exercise.flash.netty.learn.protocol;
 
 import com.tj.exercise.flash.netty.learn.protocol.command.LoginRequestPacket;
+import com.tj.exercise.flash.netty.learn.protocol.request.CreateGroupRequestPacket;
+import com.tj.exercise.flash.netty.learn.protocol.request.LogoutRequestPacket;
 import com.tj.exercise.flash.netty.learn.protocol.request.MessageRequestPacket;
+import com.tj.exercise.flash.netty.learn.protocol.response.CreateGroupResponsePacket;
 import com.tj.exercise.flash.netty.learn.protocol.response.LoginResponsePacket;
+import com.tj.exercise.flash.netty.learn.protocol.response.LogoutResponsePacket;
 import com.tj.exercise.flash.netty.learn.protocol.response.MessageResponsePacket;
 import com.tj.exercise.flash.netty.learn.serialize.Serializer;
 import com.tj.exercise.flash.netty.learn.serialize.impl.JSONSerializer;
@@ -32,6 +36,10 @@ public class PacketCodeC {
         packetTypeMap.put(LOGIN_RESPONSE, LoginResponsePacket.class);
         packetTypeMap.put(MESSAGE_REQUEST, MessageRequestPacket.class);
         packetTypeMap.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
+        packetTypeMap.put(LOGOUT_REQUEST, LogoutRequestPacket.class);
+        packetTypeMap.put(LOGOUT_RESPONSE, LogoutResponsePacket.class);
+        packetTypeMap.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        packetTypeMap.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();

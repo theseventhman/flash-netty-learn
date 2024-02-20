@@ -9,14 +9,9 @@ import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerC;
 import com.tj.exercise.flash.netty.learn.handler.outbound.OutBoundHandlerA;
 import com.tj.exercise.flash.netty.learn.handler.outbound.OutBoundHandlerB;
 import com.tj.exercise.flash.netty.learn.handler.outbound.OutBoundHandlerC;
-import com.tj.exercise.flash.netty.learn.server.handler.AuthHandler;
-import com.tj.exercise.flash.netty.learn.server.handler.LoginRequestHandler;
-import com.tj.exercise.flash.netty.learn.server.handler.MessageRequestHandler;
+import com.tj.exercise.flash.netty.learn.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -29,6 +24,9 @@ import io.netty.util.concurrent.GenericFutureListener;
  * @Date: 2024/2/12 10:37
  */
 public class NettyServer {
+
+    private static final int PORT = 8000;
+
     public static void main(String[] args){
 
         NioEventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -37,15 +35,19 @@ public class NettyServer {
 
         serverBootstrap.group(bossGroup,workerGroup)
                        .channel(NioServerSocketChannel.class)
+                       .option(ChannelOption.SO_BACKLOG,1024)
+                       .childOption(ChannelOption.SO_KEEPALIVE,true)
+                       .childOption(ChannelOption.TCP_NODELAY,true)
                        .childHandler(new ChannelInitializer<NioSocketChannel>() {
                            @Override
                            protected  void initChannel(NioSocketChannel ch){
-
                                ch.pipeline().addLast(new Spliter());
                                ch.pipeline().addLast(new PacketDecoder());
                                ch.pipeline().addLast(new LoginRequestHandler());
                                ch.pipeline().addLast(new AuthHandler());
                                ch.pipeline().addLast(new MessageRequestHandler());
+                               ch.pipeline().addLast(new CreateGroupRequestHandler());
+                               ch.pipeline().addLast(new LogoutRequestHandler());
                                ch.pipeline().addLast(new PacketEncoder());
                            }
                        });
