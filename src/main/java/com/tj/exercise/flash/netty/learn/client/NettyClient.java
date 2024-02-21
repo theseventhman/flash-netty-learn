@@ -2,10 +2,7 @@ package com.tj.exercise.flash.netty.learn.client;
 
 import com.tj.exercise.flash.netty.learn.client.console.ConsoleCommandManager;
 import com.tj.exercise.flash.netty.learn.client.console.LoginConsoleCommand;
-import com.tj.exercise.flash.netty.learn.client.handler.CreateGroupResponseHandler;
-import com.tj.exercise.flash.netty.learn.client.handler.LoginResponseHandler;
-import com.tj.exercise.flash.netty.learn.client.handler.LogoutResponseHandler;
-import com.tj.exercise.flash.netty.learn.client.handler.MessageResponseHandler;
+import com.tj.exercise.flash.netty.learn.client.handler.*;
 import com.tj.exercise.flash.netty.learn.codec.PacketDecoder;
 import com.tj.exercise.flash.netty.learn.codec.PacketEncoder;
 import com.tj.exercise.flash.netty.learn.codec.Spliter;
@@ -63,9 +60,12 @@ public class NettyClient {
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
-                        ch.pipeline().addLast(new LogoutResponseHandler());
                         ch.pipeline().addLast(new MessageResponseHandler());
                         ch.pipeline().addLast(new CreateGroupResponseHandler());
+                        ch.pipeline().addLast(new JoinGroupResponseHandler());
+                        ch.pipeline().addLast(new QuitGroupResponseHandler());
+                        ch.pipeline().addLast(new ListGroupMembersResponseHandler());
+                        ch.pipeline().addLast(new LogoutResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
                     }
                 });
