@@ -6,9 +6,11 @@ import com.tj.exercise.flash.netty.learn.client.handler.*;
 import com.tj.exercise.flash.netty.learn.codec.PacketDecoder;
 import com.tj.exercise.flash.netty.learn.codec.PacketEncoder;
 import com.tj.exercise.flash.netty.learn.codec.Spliter;
+import com.tj.exercise.flash.netty.learn.handler.IMIdleStateHandler;
 import com.tj.exercise.flash.netty.learn.protocol.PacketCodeC;
 import com.tj.exercise.flash.netty.learn.protocol.command.LoginRequestPacket;
 import com.tj.exercise.flash.netty.learn.protocol.request.MessageRequestPacket;
+import com.tj.exercise.flash.netty.learn.server.handler.GroupMessageRequestHandler;
 import com.tj.exercise.flash.netty.learn.util.LoginUtil;
 import com.tj.exercise.flash.netty.learn.util.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
@@ -57,6 +59,7 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch){
+                        ch.pipeline().addLast(new IMIdleStateHandler());
                         ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginResponseHandler());
@@ -65,8 +68,10 @@ public class NettyClient {
                         ch.pipeline().addLast(new JoinGroupResponseHandler());
                         ch.pipeline().addLast(new QuitGroupResponseHandler());
                         ch.pipeline().addLast(new ListGroupMembersResponseHandler());
+                        ch.pipeline().addLast(new GroupMessageResponseHandler());
                         ch.pipeline().addLast(new LogoutResponseHandler());
                         ch.pipeline().addLast(new PacketEncoder());
+                        ch.pipeline().addLast(new HeartBeatTimerHandler());
                     }
                 });
 

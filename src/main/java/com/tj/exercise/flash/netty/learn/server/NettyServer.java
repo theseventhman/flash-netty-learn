@@ -4,6 +4,7 @@ import com.tj.exercise.flash.netty.learn.codec.PacketCodecHandler;
 import com.tj.exercise.flash.netty.learn.codec.PacketDecoder;
 import com.tj.exercise.flash.netty.learn.codec.PacketEncoder;
 import com.tj.exercise.flash.netty.learn.codec.Spliter;
+import com.tj.exercise.flash.netty.learn.handler.IMIdleStateHandler;
 import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerA;
 import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerB;
 import com.tj.exercise.flash.netty.learn.handler.inbound.InBoundHandlerC;
@@ -17,6 +18,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
@@ -43,9 +45,11 @@ public class NettyServer {
                        .childHandler(new ChannelInitializer<NioSocketChannel>() {
                            @Override
                            protected  void initChannel(NioSocketChannel ch){
+                               ch.pipeline().addLast(new IMIdleStateHandler());
                                ch.pipeline().addLast(new Spliter());
                                ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
                                ch.pipeline().addLast(LoginRequestHandler.INSTANCE);
+                               ch.pipeline().addLast(HeartBeatRequestHandler.INSTANCE);
                                ch.pipeline().addLast(AuthHandler.INSTANCE);
                                ch.pipeline().addLast(IMHandler.INSTANCE);
                            }
