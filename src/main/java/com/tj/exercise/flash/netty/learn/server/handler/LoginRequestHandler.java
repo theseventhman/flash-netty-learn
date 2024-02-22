@@ -5,6 +5,7 @@ import com.tj.exercise.flash.netty.learn.protocol.response.LoginResponsePacket;
 import com.tj.exercise.flash.netty.learn.session.Session;
 import com.tj.exercise.flash.netty.learn.util.IDUtil;
 import com.tj.exercise.flash.netty.learn.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -14,7 +15,14 @@ import java.util.Date;
  * @Author: tj
  * @Date: 2024/2/17 12:22
  */
+@ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
+    public static final LoginRequestHandler INSTANCE = new LoginRequestHandler();
+
+    protected LoginRequestHandler() {
+    }
+
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket) throws Exception {
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket();

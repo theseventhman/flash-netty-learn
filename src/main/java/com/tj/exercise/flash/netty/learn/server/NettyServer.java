@@ -1,5 +1,6 @@
 package com.tj.exercise.flash.netty.learn.server;
 
+import com.tj.exercise.flash.netty.learn.codec.PacketCodecHandler;
 import com.tj.exercise.flash.netty.learn.codec.PacketDecoder;
 import com.tj.exercise.flash.netty.learn.codec.PacketEncoder;
 import com.tj.exercise.flash.netty.learn.codec.Spliter;
@@ -31,7 +32,8 @@ public class NettyServer {
 
         NioEventLoopGroup bossGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
-        ServerBootstrap serverBootstrap = new ServerBootstrap();
+
+        final ServerBootstrap serverBootstrap = new ServerBootstrap();
 
         serverBootstrap.group(bossGroup,workerGroup)
                        .channel(NioServerSocketChannel.class)
@@ -42,16 +44,10 @@ public class NettyServer {
                            @Override
                            protected  void initChannel(NioSocketChannel ch){
                                ch.pipeline().addLast(new Spliter());
-                               ch.pipeline().addLast(new PacketDecoder());
-                               ch.pipeline().addLast(new LoginRequestHandler());
-                               ch.pipeline().addLast(new AuthHandler());
-                               ch.pipeline().addLast(new MessageRequestHandler());
-                               ch.pipeline().addLast(new CreateGroupRequestHandler());
-                               ch.pipeline().addLast(new JoinGroupRequestHandler());
-                               ch.pipeline().addLast(new QuitGroupRequestHandler());
-                               ch.pipeline().addLast(new ListGroupMembersRequestHandler());
-                               ch.pipeline().addLast(new LogoutRequestHandler());
-                               ch.pipeline().addLast(new PacketEncoder());
+                               ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
+                               ch.pipeline().addLast(LoginRequestHandler.INSTANCE);
+                               ch.pipeline().addLast(AuthHandler.INSTANCE);
+                               ch.pipeline().addLast(IMHandler.INSTANCE);
                            }
                        });
        bind(serverBootstrap,8000);

@@ -3,6 +3,7 @@ package com.tj.exercise.flash.netty.learn.server.handler;
 import com.tj.exercise.flash.netty.learn.protocol.response.QuitGroupRequestPacket;
 import com.tj.exercise.flash.netty.learn.protocol.response.QuitGroupResponsePacket;
 import com.tj.exercise.flash.netty.learn.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -10,7 +11,13 @@ import io.netty.channel.group.ChannelGroup;
  * @Author: tj
  * @Date: 2024/2/21 11:41
  */
+@ChannelHandler.Sharable
 public class QuitGroupRequestHandler extends SimpleChannelInboundHandler<QuitGroupRequestPacket> {
+    public static final QuitGroupRequestHandler INSTANCE = new QuitGroupRequestHandler();
+
+    private QuitGroupRequestHandler() {
+
+    }
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, QuitGroupRequestPacket requestPacket) {
         // 1. 获取群对应的 channelGroup，然后将当前用户的 channel 移除
